@@ -5,22 +5,19 @@ import random
 
 delay = 0.1
 score = 0
-high = 0
-
-
 
 # Creating a window screen
-wn = turtle.Screen()
-wn.title("Snake Game")
-wn.bgcolor("black")
+root = turtle.Screen()
+root.title("Snake Game")
+root.bgcolor("white")
 # the width and height can be put as user's choice
-wn.setup(width=600, height=600)
-wn.tracer(0)
+root.setup(width=600, height=600)
+root.tracer(0)
 
 # head of the snake
 head = turtle.Turtle()
 head.shape("square")
-head.color("white")
+head.color("black")
 head.penup()
 head.goto(0, 0)
 head.direction = "Stop"
@@ -38,11 +35,11 @@ food.goto(0, 100)
 pen = turtle.Turtle()
 pen.speed(0)
 pen.shape("square")
-pen.color("white")
+pen.color("grey")
 pen.penup()
 pen.hideturtle()
 pen.goto(0, 250)
-pen.write("Score : 0 High Score : 0", align="center", font=("candara", 24, "bold"))
+pen.write("0", align="center", font=("candara", 24, "bold"))
 
 
 
@@ -83,11 +80,11 @@ def move():
 
 
 		
-wn.listen()
-wn.onkeypress(group, "w")
-wn.onkeypress(godown, "s")
-wn.onkeypress(goleft, "a")
-wn.onkeypress(goright, "d")
+root.listen()
+root.onkeypress(group, "w")
+root.onkeypress(godown, "s")
+root.onkeypress(goleft, "a")
+root.onkeypress(goright, "d")
 
 segments = []
 
@@ -95,7 +92,7 @@ segments = []
 
 # Main Gameplay
 while True:
-	wn.update()
+	root.update()
 	if head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290:
 		time.sleep(1)
 		head.goto(0, 0)
@@ -108,7 +105,7 @@ while True:
 		score = 0
 		delay = 0.1
 		pen.clear()
-		pen.write("Score : {} High Score : {} ".format(score, high), align="center", font=("candara", 24, "bold"))
+		pen.write(score, align="center", font=("candara", 24, "bold"))
 	if head.distance(food) < 20:
 		x = random.randint(-270, 270)
 		y = random.randint(-270, 270)
@@ -118,15 +115,13 @@ while True:
 		new_segment = turtle.Turtle()
 		new_segment.speed(0)
 		new_segment.shape("square")
-		new_segment.color("orange") # tail colour
+		new_segment.color("grey") # tail colour
 		new_segment.penup()
 		segments.append(new_segment)
 		delay -= 0.001
 		score += 10
-		if score > high:
-			high = score
 		pen.clear()
-		pen.write("Score : {} High Score : {} ".format(score, high), align="center", font=("candara", 24, "bold"))
+		pen.write(score, align="center", font=("candara", 24, "bold"))
 	# Checking for head collisions with body segments
 	for index in range(len(segments)-1, 0, -1):
 		x = segments[index-1].xcor()
@@ -151,7 +146,7 @@ while True:
 			score = 0
 			delay = 0.1
 			pen.clear()
-			pen.write("Score : {} High Score : {} ".format(score, high), align="center", font=("candara", 24, "bold"))
+			pen.write(score, align="center", font=("candara", 24, "bold"))
 	time.sleep(delay)
 
-wn.mainloop()
+root.mainloop()
